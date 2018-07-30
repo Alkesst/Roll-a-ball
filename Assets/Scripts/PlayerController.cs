@@ -10,13 +10,14 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     private int count;
     public Text countText;
-    public Text winText;
+    public Text finishedGameText;
+    public GameObject randomPickups;
 
 	private void Start() {
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
-        winText.text = "";
+        finishedGameText.text = "";
 	}
 
 	private void FixedUpdate() {
@@ -31,13 +32,17 @@ public class PlayerController : MonoBehaviour {
             other.gameObject.SetActive(false);
             count++;
             SetCountText();
+        } 
+        if (other.gameObject.CompareTag("Evil Pick Up")) {
+            finishedGameText.text = "You lose!\nScore: " + count.ToString();
+            Destroy(this.gameObject);
         }
     }
 
     private void SetCountText() { 
         countText.text = "Score: " + count.ToString();
-        if (count >= 8) {
-            winText.text = "You win!!";
+        if (count >= randomPickups.GetComponent<RandomizePickUps>().PICKUPS) {
+            finishedGameText.text = "You win!!\nScore: " + count.ToString();
             Destroy(this.gameObject);
         }
     }
