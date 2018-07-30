@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 
 public class PlayerController : MonoBehaviour {
@@ -43,7 +43,11 @@ public class PlayerController : MonoBehaviour {
         countText.text = "Score: " + count.ToString();
         if (count >= randomPickups.GetComponent<RandomizePickUps>().PICKUPS) {
             finishedGameText.text = "You win!!\nScore: " + count.ToString();
-            Destroy(this.gameObject);
+            StartCoroutine(WaitAndNextScene());
         }
+    }
+    IEnumerator WaitAndNextScene() {
+        yield return new WaitForSecondsRealtime(5);
+        SceneManager.LoadScene("Level1");
     }
 }

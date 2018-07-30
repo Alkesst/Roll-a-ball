@@ -5,6 +5,7 @@ using UnityEngine;
 public class RandomizePickUps : MonoBehaviour {
     public int PICKUPS;
     public int EVILPICKUPS;
+    public Vector3 zone;
     public GameObject reference;
     public GameObject evilReference;
     private List<Vector3> pickupsOnGround = new List<Vector3>();
@@ -13,22 +14,22 @@ public class RandomizePickUps : MonoBehaviour {
 	void Start () {
         for (int i = 0; i < PICKUPS; i++) {
             GameObject NewPickup = Instantiate(reference);
-            Vector3 randomPos = new Vector3(Random.Range(-9, 9),
-                                            0.5f, Random.Range(-9, 9));
+            Vector3 randomPos = new Vector3(Random.Range(zone.x, zone.z),
+                                            zone.y, Random.Range(zone.x, zone.z));
             while(!IsAGoodPosition(randomPos)) {
-                randomPos = new Vector3(Random.Range(-9, 9),
-                                            0.5f, Random.Range(-9, 9)); 
+                randomPos = new Vector3(Random.Range(zone.x, zone.z),
+                                            zone.y, Random.Range(zone.x, zone.z)); 
             }
             NewPickup.transform.position = randomPos;
             pickupsOnGround.Add(randomPos);
         }
         for (int i = 0; i < EVILPICKUPS; i++) {
             GameObject NewEvilPickup = Instantiate(evilReference);
-            Vector3 randomPos = new Vector3(Random.Range(-9, 9),
-                                            0.5f, Random.Range(-9, 9));
+            Vector3 randomPos = new Vector3(Random.Range(zone.x, zone.z),
+                                            zone.y, Random.Range(zone.x, zone.z));
             while (!IsAGoodPosition(randomPos)) {
-                randomPos = new Vector3(Random.Range(-9, 9),
-                                            0.5f, Random.Range(-9, 9));
+                randomPos = new Vector3(Random.Range(zone.x, zone.z),
+                                            zone.y, Random.Range(zone.x, zone.z));
                 }
             NewEvilPickup.transform.position = randomPos;
             evilPickUpsOnGround.Add(randomPos);
